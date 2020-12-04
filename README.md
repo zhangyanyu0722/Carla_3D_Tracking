@@ -38,7 +38,7 @@ For more detailed instructions, please refer to [`DOCUMENTATION.md`](3d-tracking
 - Clone this repo:
 ```bash
 git clone https://github.com/zhangyanyu0722/Carla_Tracking.git
-cd 3d-vehicle-tracking/
+cd Carla_Tracking/
 ```
 
 - Install PyTorch 1.0.0+ and torchvision from http://pytorch.org and other dependencies. You can create a virtual environment by the following:
@@ -68,7 +68,7 @@ cd faster-rcnn.pytorch
 bash init.sh
 ```
 
-> NOTE: For [faster-rcnn-pytorch](faster-rcnn-pytorch/lib/setup.py) compiling problems 
+> NOTE: For [faster-rcnn-pytorch](faster-rcnn.pytorch/lib/setup.py) compiling problems 
 [[1](https://github.com/jwyang/faster-rcnn.pytorch/issues/410#issuecomment-450709668)], please compile COCO API and replace pycocotools.
 
 > NOTE: For [object-ap-eval](https://github.com/traveller59/kitti-object-eval-python#dependencies) compiling problem. It only supports python 3.6+, need `numpy`, `skimage`, `numba`, `fire`. If you have Anaconda, just install `cudatoolkit` in anaconda. Otherwise, please reference to this [page](https://github.com/numba/numba#custom-python-environments) to set up llvm and cuda for numba.
