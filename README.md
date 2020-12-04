@@ -5,18 +5,9 @@
   <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/3D.gif" height="300" width="500"/>
 </p>
 
-<p align="center">
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/birdview.gif" height="400" width="400"/>
-</p>
-
 ## Introduction
 
 - We present a mixed convolutional neural network to playing the CarRacing-v0 using imitation learning in OpenAI Gym. After training, this model can automatically detect the boundaries of road features and drive the robot like a human.
-
-
-## Team Numbers
-
-- [Yanyu Zhang](https://yanyuzhang.com/) : zhangya@bu.edu
 
 ## Prerequisites
 ```diff
@@ -95,7 +86,4 @@ python3 main.py score
 ```
 
 ## LICENSE
-See [LICENSE](https://github.com/zhangyanyu0722/Car_Racing_DL/blob/master/LICENSE) for details. Third-party datasets and tools are subject to their respective licenses.
-
-## Acknowledgements
-This work has benefitted enormously from conversations with Jimuyang Zhang, Yang Hu and Eshed Ohn-Bar.
+See [LICENSE](https://github.com/zhangyanyu0722/Carla_Tracking/blob/master/LICENSE) for details. Third-party datasets and tools are subject to their respective licenses.
