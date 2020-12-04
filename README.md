@@ -37,64 +37,98 @@ For more detailed instructions, please refer to [`DOCUMENTATION.md`](3d-tracking
 ### Installation
 - Clone this repo:
 ```bash
-git clone https://github.com/zhangyanyu0722/Car_Racing_DL.git
-cd Car_Racing_DL/
+git clone -b pytorch1.0 --single-branch https://github.com/ucbdrive/3d-vehicle-tracking.git
+cd 3d-vehicle-tracking/
 ```
 
-- Install PyTorch 1.6.0 and torchvision 0.7.0 from http://pytorch.org and other dependencies.
+- Install PyTorch 1.0.0+ and torchvision from http://pytorch.org and other dependencies. You can create a virtual environment by the following:
 ```bash
-# Install gym (recommand conda)
-conda install -c conda-forge gym
-# Or
-pip install 'gym[all]'
+# Add path to bashrc 
+echo -e '\nexport PYENV_ROOT="$HOME/.pyenv"\nexport PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+
+# Install pyenv
+curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+
+# Restart a new terminal if "exec $SHELL" doesn't work
+exec $SHELL
+
+# Install and activate Python in pyenv
+pyenv install 3.6.9
+pyenv local 3.6.9
 ```
-- Install requirements.
+
+- Install requirements, create folders and compile binaries for detection
 ```bash
-pip3 install -r requirements.txt
-```
-### Data Preparation (Optical)
+cd 3DTracking
+bash scripts/init.sh
+cd ..
 
-- For a quick start, we suggest downing this [dataset](https://drive.google.com/file/d/1RtoSgk78raI549A3BE8uYRV9Ly9DY7GJ/view?usp=sharing) and drop it into ```Car_Racing_DL``` folder.
-```diff
-! NOTE: Click "Download Anyway" if it shows Google Drive can't scan this file for viruses.
+cd faster-rcnn.pytorch
+bash init.sh
 ```
-- Download and unzip [dataset](https://drive.google.com/file/d/1RtoSgk78raI549A3BE8uYRV9Ly9DY7GJ/view?usp=sharing)
+
+> NOTE: For [faster-rcnn-pytorch](faster-rcnn-pytorch/lib/setup.py) compiling problems 
+[[1](https://github.com/jwyang/faster-rcnn.pytorch/issues/410#issuecomment-450709668)], please compile COCO API and replace pycocotools.
+
+> NOTE: For [object-ap-eval](https://github.com/traveller59/kitti-object-eval-python#dependencies) compiling problem. It only supports python 3.6+, need `numpy`, `skimage`, `numba`, `fire`. If you have Anaconda, just install `cudatoolkit` in anaconda. Otherwise, please reference to this [page](https://github.com/numba/numba#custom-python-environments) to set up llvm and cuda for numba.
+
+### Data Preparation
+
+
+### Execution
+
+For running a whole pipeline (2D proposals, 3D estimation and tracking):
 ```bash
-# make a folder under repo.
-mkdir data
-# Unzip the dataset.
-tar -xvf teacher.tar.gz -C data
+# Generate predicted bounding boxes for object proposals
+cd faster-rcnn.pytorch/
+
+# Step 00 (Optional) - Training on GTA dataset
+./run_train.sh
+
+# Step 01 - Generate bounding boxes
+./run_test.sh
 ```
-- Data Preprocessing : we map all actions into 7 classes and randomly delete 50% dataset in the "Accelerate" class.
+
 ```bash
-# Data Preprocessing
-python3 preprocessing.py
+# Given object proposal bounding boxes and 3D center from faster-rcnn.pytorch directory
+cd 3d-tracking/
+
+# Step 00 - Data Preprocessing
+# Collect features into json files (check variables in the code)
+python loader/gen_pred.py gta val
+
+# Step 01 - 3D Estimation
+# Running single task scripts mentioned below and training by yourself
+# or alternatively, using multi-GPUs and multi-processes to run through all 100 sequences
+python run_estimation.py gta val --session 616 --epoch 030
+
+# Step 02 - 3D Tracking and Evaluation
+# 3D helps tracking part. For tracking evaluation, 
+# using multi-GPUs and multi-processes to run through all 100 sequences
+python run_tracking.py gta val --session 616 --epoch 030
+
+# Step 03 - 3D AP Evaluation
+# Convert tracking output to evaluation format
+python tools/convert_estimation_bdd.py gta val --session 616 --epoch 030
+python tools/convert_tracking_bdd.py gta val --session 616 --epoch 030
+
+# Evaluation of 3D Estimation
+python tools/eval_dep_bdd.py gta val --session 616 --epoch 030
+
+# 3D helps Tracking part
+python tools/eval_mot_bdd.py --gt_path output/616_030_gta_val_set --pd_path output/616_030_gta_val_set/kf3doccdeep_age20_aff0.1_hit0_100m_803
+
+# Tracking helps 3D part
+cd tools/object-ap-eval/
+python test_det_ap.py gta val --session 616 --epoch 030
 ```
 
-### Train Model (Optical)
-```bash
-# Train the model, do not recommand if do not have a GPU
-python3 main.py train
-```
+> Note: If facing `ModuleNotFoundError: No module named 'utils'` problem, please add `PYTHONPATH=.` before `python {scripts} {arguments}`.
 
-### Model Evaluation
-
-- For convenience, we provide many pre-trained models here, just click to download.
-
-Channel | Model | Score | Model | Score | Model | Score | Model | Score
------|------|------|------|------|------|------|------|------
-RGB | [VGG16_RGB](https://drive.google.com/file/d/1GLK9af4OUU8GmmNMiOh61pmKWKhCqWmH/view?usp=sharing) | 438.8 | [AlexNet_RGB](https://drive.google.com/file/d/17L2ZqE12jmdBLMrPzQEOWPDvcDAU8q9h/view?usp=sharing) | 471.5 | [EasyNet_RGB](https://drive.google.com/file/d/1npkvXvTZvkxhyx7EIRlzGEc5L8U5I_r3/view?usp=sharing) | 594.9
-Gray | [VGG16_Gray](https://drive.google.com/file/d/1a63waR8AA-yNFJ8FjUKkhu0cvYXjb7VU/view?usp=sharing) | 432.4 | [AlexNet_Gray](https://drive.google.com/file/d/17n-Zf5HyKIYqP9Vh95UrbIYXIblEz8a4/view?usp=sharing) | 464.9 | [EasyNet_Gray](https://drive.google.com/file/d/1xsCawTvq3nVlHreO2e8IqXa7XzhoxL7L/view?usp=sharing) | 558.3 | [Best Model](https://drive.google.com/file/d/1krJQd033m6JzdB2LUGMqO0YKjGhPiMRj/view?usp=sharing) | 649.1
-
-- Then you need to rename it as ```train.t7``` and put it under ```Car_Racing_DL/data```
-- Test the final performance to control a robot in Gym
-```bash
-# Test the model
-python3 main.py test
-
-# Score the model
-python3 main.py score
-```
 
 ## LICENSE
 See [LICENSE](https://github.com/zhangyanyu0722/Carla_Tracking/blob/master/LICENSE) for details. Third-party datasets and tools are subject to their respective licenses.
+
+## Acknowledgements
+We thank [faster.rcnn.pytorch](https://github.com/jwyang/faster-rcnn.pytorch) for the detection codebase, [pymot](https://github.com/Videmo/pymot) for their MOT evaluation tool and [kitti-object-eval-python](https://github.com/traveller59/kitti-object-eval-python) for the 3D AP calculation tool.
