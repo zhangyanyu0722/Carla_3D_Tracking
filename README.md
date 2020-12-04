@@ -96,17 +96,17 @@ cd 3d-tracking/
 
 # Step 00 - Data Preprocessing
 # Collect features into json files (check variables in the code)
-python loader/gen_pred.py gta val
+python loader/gen_pred.py carla val
 
 # Step 01 - 3D Estimation
 # Running single task scripts mentioned below and training by yourself
 # or alternatively, using multi-GPUs and multi-processes to run through all 100 sequences
-python run_estimation.py gta val --session 616 --epoch 030
+python run_estimation.py carla val --session 616 --epoch 030
 
 # Step 02 - 3D Tracking and Evaluation
 # 3D helps tracking part. For tracking evaluation, 
 # using multi-GPUs and multi-processes to run through all 100 sequences
-python run_tracking.py gta val --session 616 --epoch 030
+python run_tracking.py carla val --session 616 --epoch 030
 
 # Step 03 - 3D AP Evaluation
 ```
