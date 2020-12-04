@@ -37,7 +37,7 @@ For more detailed instructions, please refer to [`DOCUMENTATION.md`](3d-tracking
 ### Installation
 - Clone this repo:
 ```bash
-git clone -b pytorch1.0 --single-branch https://github.com/ucbdrive/3d-vehicle-tracking.git
+git clone https://github.com/zhangyanyu0722/Carla_Tracking.git
 cd 3d-vehicle-tracking/
 ```
 
@@ -83,7 +83,7 @@ For running a whole pipeline (2D proposals, 3D estimation and tracking):
 # Generate predicted bounding boxes for object proposals
 cd faster-rcnn.pytorch/
 
-# Step 00 (Optional) - Training on GTA dataset
+# Step 00 (Optional) - Training on CARLA dataset
 ./run_train.sh
 
 # Step 01 - Generate bounding boxes
@@ -109,19 +109,6 @@ python run_estimation.py gta val --session 616 --epoch 030
 python run_tracking.py gta val --session 616 --epoch 030
 
 # Step 03 - 3D AP Evaluation
-# Convert tracking output to evaluation format
-python tools/convert_estimation_bdd.py gta val --session 616 --epoch 030
-python tools/convert_tracking_bdd.py gta val --session 616 --epoch 030
-
-# Evaluation of 3D Estimation
-python tools/eval_dep_bdd.py gta val --session 616 --epoch 030
-
-# 3D helps Tracking part
-python tools/eval_mot_bdd.py --gt_path output/616_030_gta_val_set --pd_path output/616_030_gta_val_set/kf3doccdeep_age20_aff0.1_hit0_100m_803
-
-# Tracking helps 3D part
-cd tools/object-ap-eval/
-python test_det_ap.py gta val --session 616 --epoch 030
 ```
 
 > Note: If facing `ModuleNotFoundError: No module named 'utils'` problem, please add `PYTHONPATH=.` before `python {scripts} {arguments}`.
