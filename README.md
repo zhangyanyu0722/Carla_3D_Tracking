@@ -1,8 +1,8 @@
 # Monocular 3D Vehicle Detection and Tracking in CARLA
 
 <p align="center">
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/2D.gif" height="300" width="500"/>
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/3D.gif" height="300" width="500"/>
+  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/2D.gif" height="250" width="400"/>
+  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/3D.gif" height="250" width="400"/>
 </p>
 
 ## Introduction
