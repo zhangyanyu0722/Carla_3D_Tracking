@@ -1,6 +1,6 @@
 
 # Carla Data Export
-This repository contains the code we used for generating training data from the CARLA simulator in our paper [**Multimodal 3D Object Detection from Simulated Pretraining**](https://arxiv.org/abs/1905.07754)
+This repository contains the code we used for generating training data from the CARLA simulator
 
 ## Installation
 Download and extract CARLA 0.8.4 from https://github.com/carla-simulator/carla/releases/tag/0.8.4  
@@ -20,13 +20,3 @@ Once the server is running, data generation can be started using (remove --autop
 python datageneration.py --autopilot
 ```
 
-## Citation
-If you have used our work, please cite our paper:
-```
-@article{brekke2019multimodal,
-  title={Multimodal 3D Object Detection from Simulated Pretraining},
-  author={Brekke, {\AA}smund and Vatsendvik, Fredrik and Lindseth, Frank},
-  journal={arXiv preprint arXiv:1905.07754},
-  year={2019}
-}
-```
