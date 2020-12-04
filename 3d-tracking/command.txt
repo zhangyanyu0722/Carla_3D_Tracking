@@ -1,0 +1,4 @@
+PYTHONPATH=. python loader/gen_pred.py carla val
+PYTHONPATH=. python run_estimation.py carla val --session 888 --epoch 030
+PYTHONPATH=. python run_tracking.py carla val --session 888 --epoch 030
+PYTHONPATH=. python tools/plot_tracking.py carla val --session 888 --epoch 030
