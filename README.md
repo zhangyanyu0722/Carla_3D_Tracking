@@ -90,6 +90,7 @@ pip install -r requirements.txt
 ```
 python datageneration.py --autopilot
 ```
+- Download the [pretrained model](https://drive.google.com/file/d/1UtC_Kn_qaUZQ3IobGkLkIPXL6wukklo6/view?usp=sharing)
 
 ### Execution
 
