@@ -115,19 +115,18 @@ python loader/gen_pred.py carla val
 
 # Step 01 - 3D Estimation
 # Running single task scripts mentioned below and training by yourself
-# or alternatively, using multi-GPUs and multi-processes to run through all 100 sequences
+# or alternatively, using multi-GPUs and multi-processes to run through all sequences
 python run_estimation.py carla val --session 888 --epoch 030
 
 # Step 02 - 3D Tracking and Evaluation
 # 3D helps tracking part. For tracking evaluation, 
-# using multi-GPUs and multi-processes to run through all 100 sequences
+# using multi-GPUs and multi-processes to run through all sequences
 python run_tracking.py carla val --session 888 --epoch 030
 
 # Step 03 - 3D AP Evaluation
-```
+# Plot the 2D/3D/Birdview figure
 python tools/plot_tracking.py carla val --session 888 --epoch 030
 ```
-
 
 > Note: If facing `ModuleNotFoundError: No module named 'utils'` problem, please add `PYTHONPATH=.` before `python {scripts} {arguments}`.
 
