@@ -16,15 +16,9 @@
 
 - Linux (tested on Ubuntu 16.04.4 LTS)
 - Python 3.6.9
-    - `3.6.4` tested
-    - `3.6.9` tested
 - PyTorch 1.3.1 
-    - `1.0.0` (with CUDA 9.0, torchvision 0.2.1)
-    - `1.1.0` (with CUDA 9.0, torchvision 0.3.0)
-    - `1.3.1` (with CUDA 10.1, torchvision 0.4.2)
-- nvcc 10.1
-    - `9.0.176`, `10.1` compiling and execution tested
-    - `9.2.88` execution only
+    - `1.3.1` (with CUDA 10.2, torchvision 0.4.2)
+- nvcc 10.2.89
 - gcc 5.4.0
 - Pyenv or Anaconda
 
@@ -60,7 +54,7 @@ pyenv local 3.6.9
 
 - Install requirements, create folders and compile binaries for detection
 ```bash
-cd 3DTracking
+cd 3d-tracking
 bash scripts/init.sh
 cd ..
 
@@ -82,15 +76,24 @@ Install all the necessary requirements for your python environment using:
 pip install -r requirements.txt
 ```
 
-- Before the data generation scripts can be run you must start a CARLA server. This can be done by running the executable in the CARLA root folder with the appropriate parameters. Running the server on windows in a small 200x200 window would for example be:
+- Before the data generation scripts can be run you must start a CARLA server. This can be done by running the executable in the CARLA root folder with the appropriate parameters. Running the server on windows in a 960x540 window would for example be:
 ```
-./CarlaUE4.exe -carla-server -fps=10 -windowed -ResX=200 -ResY=200
+./CarlaUE4.exe -carla-server -fps=10 -windowed -ResX=960 -ResY=540
 ```
 - Once the server is running, data generation can be started using (remove --autopilot for manual control):
 ```
 python datageneration.py --autopilot
 ```
 
+- After collecting data, copy the image and label folder from `carla_data_export/_out` to `3d-tracking/data/carla/val`.
+
+- Download the [Pretrained Model](https://drive.google.com/file/d/1lcZvGCGoj4uEkm6hpeveQG0VCbLVqmEV/view?usp=sharing) and extract 
+  - (Optional) `resnet101_caffe.pth` to `faster-rcnn.pytorch/data/pretrained_model` if you want to train from scratch.
+
+  - `faster_rcnn_666_20_19462.pth` to `faster-rcnn.pytorch/models/res101/carla`.  
+  
+  - `888_carla_checkpoint_030.pth.tar` to `3d-tracking/checkpoint`
+  
 ### Execution
 
 For running a whole pipeline (2D proposals, 3D estimation and tracking):
@@ -135,4 +138,4 @@ python tools/plot_tracking.py carla val --session 888 --epoch 030
 See [LICENSE](https://github.com/zhangyanyu0722/Carla_Tracking/blob/master/LICENSE) for details. Third-party datasets and tools are subject to their respective licenses.
 
 ## Acknowledgements
-We thank [faster.rcnn.pytorch](https://github.com/jwyang/faster-rcnn.pytorch) for the detection codebase, [pymot](https://github.com/Videmo/pymot) for their MOT evaluation tool and [kitti-object-eval-python](https://github.com/traveller59/kitti-object-eval-python) for the 3D AP calculation tool.
+We thank [3d-vehicle-tracking](https://github.com/ucbdrive/3d-vehicle-tracking) for the 3d vehicle tracking part, [faster.rcnn.pytorch](https://github.com/jwyang/faster-rcnn.pytorch) for the detection codebase, [pymot](https://github.com/Videmo/pymot) for their MOT evaluation tool and [kitti-object-eval-python](https://github.com/traveller59/kitti-object-eval-python) for the 3D AP calculation tool.
