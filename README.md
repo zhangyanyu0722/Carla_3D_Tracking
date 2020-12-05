@@ -16,15 +16,9 @@
 
 - Linux (tested on Ubuntu 16.04.4 LTS)
 - Python 3.6.9
-    - `3.6.4` tested
-    - `3.6.9` tested
 - PyTorch 1.3.1 
-    - `1.0.0` (with CUDA 9.0, torchvision 0.2.1)
-    - `1.1.0` (with CUDA 9.0, torchvision 0.3.0)
-    - `1.3.1` (with CUDA 10.1, torchvision 0.4.2)
-- nvcc 10.1
-    - `9.0.176`, `10.1` compiling and execution tested
-    - `9.2.88` execution only
+    - `1.3.1` (with CUDA 10.2, torchvision 0.4.2)
+- nvcc 10.2.89
 - gcc 5.4.0
 - Pyenv or Anaconda
 
@@ -82,9 +76,9 @@ Install all the necessary requirements for your python environment using:
 pip install -r requirements.txt
 ```
 
-- Before the data generation scripts can be run you must start a CARLA server. This can be done by running the executable in the CARLA root folder with the appropriate parameters. Running the server on windows in a small 200x200 window would for example be:
+- Before the data generation scripts can be run you must start a CARLA server. This can be done by running the executable in the CARLA root folder with the appropriate parameters. Running the server on windows in a 960x540 window would for example be:
 ```
-./CarlaUE4.exe -carla-server -fps=10 -windowed -ResX=200 -ResY=200
+./CarlaUE4.exe -carla-server -fps=10 -windowed -ResX=960 -ResY=540
 ```
 - Once the server is running, data generation can be started using (remove --autopilot for manual control):
 ```
