@@ -90,8 +90,16 @@ pip install -r requirements.txt
 ```
 python datageneration.py --autopilot
 ```
-- Download the [pretrained model](https://drive.google.com/file/d/1UtC_Kn_qaUZQ3IobGkLkIPXL6wukklo6/view?usp=sharing)
 
+- After collecting data, copy the image and label folder from `carla_data_export/_out` to `3d-tracking/data/carla/val`.
+
+- Download the [pretrained model](https://drive.google.com/file/d/1UtC_Kn_qaUZQ3IobGkLkIPXL6wukklo6/view?usp=sharing) and extract 
+  - (Optional) `resnet101_caffe.pth` to `faster-rcnn.pytorch/data/pretrained_model` if you want to train from scratch.
+
+  - `faster_rcnn_666_20_19462.pth` to `faster-rcnn.pytorch/models/res101/carla`.  
+  
+  - `888_carla_checkpoint_030.pth.tar` to `3d-tracking/checkpoint`
+  
 ### Execution
 
 For running a whole pipeline (2D proposals, 3D estimation and tracking):
@@ -136,4 +144,4 @@ python tools/plot_tracking.py carla val --session 888 --epoch 030
 See [LICENSE](https://github.com/zhangyanyu0722/Carla_Tracking/blob/master/LICENSE) for details. Third-party datasets and tools are subject to their respective licenses.
 
 ## Acknowledgements
-We thank [faster.rcnn.pytorch](https://github.com/jwyang/faster-rcnn.pytorch) for the detection codebase, [pymot](https://github.com/Videmo/pymot) for their MOT evaluation tool and [kitti-object-eval-python](https://github.com/traveller59/kitti-object-eval-python) for the 3D AP calculation tool.
+We thank [3d-vehicle-tracking](https://github.com/ucbdrive/3d-vehicle-tracking) for the 3d vehicle tracking part, [faster.rcnn.pytorch](https://github.com/jwyang/faster-rcnn.pytorch) for the detection codebase, [pymot](https://github.com/Videmo/pymot) for their MOT evaluation tool and [kitti-object-eval-python](https://github.com/traveller59/kitti-object-eval-python) for the 3D AP calculation tool.
