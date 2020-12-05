@@ -60,7 +60,7 @@ pyenv local 3.6.9
 
 - Install requirements, create folders and compile binaries for detection
 ```bash
-cd 3DTracking
+cd 3d-tracking
 bash scripts/init.sh
 cd ..
 
