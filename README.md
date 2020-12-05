@@ -87,7 +87,7 @@ python datageneration.py --autopilot
 
 - After collecting data, copy the image and label folder from `carla_data_export/_out` to `3d-tracking/data/carla/val`.
 
-- Download the [pretrained model](https://drive.google.com/file/d/1lcZvGCGoj4uEkm6hpeveQG0VCbLVqmEV/view?usp=sharing) and extract 
+- Download the [Pretrained Model](https://drive.google.com/file/d/1lcZvGCGoj4uEkm6hpeveQG0VCbLVqmEV/view?usp=sharing) and extract 
   - (Optional) `resnet101_caffe.pth` to `faster-rcnn.pytorch/data/pretrained_model` if you want to train from scratch.
 
   - `faster_rcnn_666_20_19462.pth` to `faster-rcnn.pytorch/models/res101/carla`.  
