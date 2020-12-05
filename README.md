@@ -1,8 +1,8 @@
 # Monocular 3D Vehicle Detection and Tracking in CARLA
 
 <p align="center">
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/2D.gif" height="250" width="400"/>
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/3D.gif" height="250" width="400"/>
+  <img src="https://github.com/zhangyanyu0722/Carla_3D_Tracking/blob/main/image/2D.gif" height="250" width="400"/>
+  <img src="https://github.com/zhangyanyu0722/Carla_3D_Tracking/blob/main/image/3D.gif" height="250" width="400"/>
 </p>
 
 ## Introduction
@@ -37,8 +37,8 @@ For more detailed instructions, please refer to [`DOCUMENTATION.md`](3d-tracking
 ### Installation
 - Clone this repo:
 ```bash
-git clone https://github.com/zhangyanyu0722/Carla_Tracking.git
-cd Carla_Tracking/
+git clone https://github.com/zhangyanyu0722/Carla_3D_Tracking.git
+cd Carla_3D_Tracking/
 ```
 
 - Install PyTorch 1.0.0+ and torchvision from http://pytorch.org and other dependencies. You can create a virtual environment by the following:
