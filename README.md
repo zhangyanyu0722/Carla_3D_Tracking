@@ -1,8 +1,8 @@
 # Monocular 3D Vehicle Detection and Tracking in CARLA
 
 <p align="center">
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/2D.gif" height="250" width="400"/>
-  <img src="https://github.com/zhangyanyu0722/Carla_Tracking/blob/main/image/3D.gif" height="250" width="400"/>
+  <img src="https://github.com/zhangyanyu0722/Carla_3D_Tracking/blob/main/image/2D.gif" height="250" width="400"/>
+  <img src="https://github.com/zhangyanyu0722/Carla_3D_Tracking/blob/main/image/3D.gif" height="250" width="400"/>
 </p>
 
 ## Introduction
@@ -37,8 +37,8 @@ For more detailed instructions, please refer to [`DOCUMENTATION.md`](3d-tracking
 ### Installation
 - Clone this repo:
 ```bash
-git clone https://github.com/zhangyanyu0722/Carla_Tracking.git
-cd Carla_Tracking/
+git clone https://github.com/zhangyanyu0722/Carla_3D_Tracking.git
+cd Carla_3D_Tracking/
 ```
 
 - Install PyTorch 1.0.0+ and torchvision from http://pytorch.org and other dependencies. You can create a virtual environment by the following:
@@ -75,6 +75,21 @@ bash init.sh
 
 ### Data Preparation
 
+- Download and extract CARLA 0.8.4 from https://github.com/carla-simulator/carla/releases/tag/0.8.4  
+This project expects the carla folder to be inside this project i.e PythonClient/carla-data-export/carla  
+Install all the necessary requirements for your python environment using:
+```
+pip install -r requirements.txt
+```
+
+- Before the data generation scripts can be run you must start a CARLA server. This can be done by running the executable in the CARLA root folder with the appropriate parameters. Running the server on windows in a small 200x200 window would for example be:
+```
+./CarlaUE4.exe -carla-server -fps=10 -windowed -ResX=200 -ResY=200
+```
+- Once the server is running, data generation can be started using (remove --autopilot for manual control):
+```
+python datageneration.py --autopilot
+```
 
 ### Execution
 
@@ -100,15 +115,17 @@ python loader/gen_pred.py carla val
 
 # Step 01 - 3D Estimation
 # Running single task scripts mentioned below and training by yourself
-# or alternatively, using multi-GPUs and multi-processes to run through all 100 sequences
-python run_estimation.py carla val --session 616 --epoch 030
+# or alternatively, using multi-GPUs and multi-processes to run through all sequences
+python run_estimation.py carla val --session 888 --epoch 030
 
 # Step 02 - 3D Tracking and Evaluation
 # 3D helps tracking part. For tracking evaluation, 
-# using multi-GPUs and multi-processes to run through all 100 sequences
-python run_tracking.py carla val --session 616 --epoch 030
+# using multi-GPUs and multi-processes to run through all sequences
+python run_tracking.py carla val --session 888 --epoch 030
 
 # Step 03 - 3D AP Evaluation
+# Plot the 2D/3D/Birdview figure
+python tools/plot_tracking.py carla val --session 888 --epoch 030
 ```
 
 > Note: If facing `ModuleNotFoundError: No module named 'utils'` problem, please add `PYTHONPATH=.` before `python {scripts} {arguments}`.
